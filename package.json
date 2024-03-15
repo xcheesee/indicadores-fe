@@ -10,8 +10,17 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.11.4",
     "nuxt": "^3.9.3",
+    "nuxt-icon": "^0.6.9",
+    "prettier": "3.2.5",
     "vue": "^3.4.14",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "echarts": "^5.5.0",
+    "three": "^0.162.0",
+    "vite-plugin-glsl": "^1.2.1",
+    "vue-echarts": "^6.6.9"
   }
 }
