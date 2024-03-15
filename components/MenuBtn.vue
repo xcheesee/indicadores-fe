@@ -1,11 +1,9 @@
 <script setup>
-import { ref } from "vue";
 const { texto, rota } = defineProps({
   texto: String,
   rota: String,
 });
 
-const router = useRouter();
 const transitionContainer = ref(false);
 
 async function triggerPressAnimation(element) {

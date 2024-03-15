@@ -1,6 +1,4 @@
-<script setup>
-import MenuBtn from "@/components/MenuBtn.vue";
-</script>
+<script setup></script>
 
 <template>
   <header class="relative">

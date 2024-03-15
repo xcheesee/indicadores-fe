@@ -1,16 +1,6 @@
-<script setup>
-import { useRoute, useRouter } from "vue-router";
-import SidebarSearch from "./SidebarSearch.vue";
-
-const route = useRoute();
-const router = useRouter();
-
-function voltar() {
-  router.push("/dashboard");
-}
-</script>
+<script setup></script>
 <template>
-  <Transition name="slide" :appear="route.query.fromDash === 'true'">
+  <Transition name="slide" :appear="$route.query.fromDash === 'true'">
     <aside
       class="fixed z-10 h-screen w-[60px] overflow-x-hidden bg-white py-4 shadow-lg transition-width duration-500 focus-within:w-[300px] hover:w-[300px]"
       id="sidebar-container"
@@ -22,7 +12,7 @@ function voltar() {
               src="@/assets/images/geo5.png"
               alt=""
               class="h-full w-full cursor-pointer object-fill transition-transform duration-300 ease-in-out hover:scale-110"
-              @click="voltar()"
+              @click="navigateTo('/dashboard')"
             />
           </div>
         </div>

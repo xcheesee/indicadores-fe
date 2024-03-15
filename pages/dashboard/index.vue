@@ -1,9 +1,4 @@
-<script setup>
-import PainelBtn from "@/components/painelBtn.vue";
-import DashboardSearch from "@/components/DashboardSearch.vue";
-import Select from "@/components/input/Select.vue";
-import SelectValue from "@/components/input/SelectValue.vue";
-</script>
+<script setup></script>
 
 <template>
   <ClientOnly>
@@ -35,16 +30,16 @@ import SelectValue from "@/components/input/SelectValue.vue";
               <label for="projeto" class="text-xl font-bold text-primary-800"
                 >Projeto</label
               >
-              <Select
+              <InputSelect
                 name="projeto"
                 id="projeto"
                 class="h-8 w-full rounded bg-primary-100 px-2"
                 tabindex="100"
                 placeholder="Selecione um Projeto"
               >
-                <SelectValue value="2">Todos</SelectValue>
-                <SelectValue value="1">Biosampa</SelectValue>
-              </Select>
+                <InputSelectValue value="2">Todos</InputSelectValue>
+                <InputSelectValue value="1">Biosampa</InputSelectValue>
+              </InputSelect>
             </div>
           </div>
 

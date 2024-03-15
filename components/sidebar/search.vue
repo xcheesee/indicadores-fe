@@ -1,7 +1,4 @@
 <script setup>
-import { Icon } from "@iconify/vue";
-import { onBeforeUnmount, onMounted } from "vue";
-
 let animatePesquisaClick;
 let animatePesquisaLeave;
 
@@ -77,9 +74,9 @@ onBeforeUnmount(() => {
         id="pesquisar-input"
       />
       <Icon
-        icon="mdi:search"
+        name="mdi:search"
         class="absolute right-0 top-1/2 z-20 -translate-y-1/2"
-        width="32"
+        size="32"
         id="pesquisar-id"
       />
     </div>

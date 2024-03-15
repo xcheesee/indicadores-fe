@@ -1,12 +1,4 @@
 <script setup>
-import {
-  ChartCardElement,
-  PieChart,
-  BarChart,
-  LineChart,
-} from "@/components/charts";
-import { onMounted } from "vue";
-
 definePageMeta({
   layout: "charts",
 });
@@ -16,35 +8,35 @@ onMounted(() => {
 });
 </script>
 <template>
-  <ChartCardElement
+  <ChartCardWrapper
     class="col-span-12 2xl:col-span-6"
     :fadein="$route.query.fromDash === 'true'"
-    ><PieChart
-  /></ChartCardElement>
+    ><ChartPie
+  /></ChartCardWrapper>
 
-  <ChartCardElement
+  <ChartCardWrapper
     class="col-span-12 2xl:col-span-6"
     :fadein="$route.query.fromDash === 'true'"
-    ><LineChart
-  /></ChartCardElement>
+    ><ChartLine
+  /></ChartCardWrapper>
 
-  <ChartCardElement
+  <ChartCardWrapper
     class="col-span-12"
     :fadein="$route.query.fromDash === 'true'"
-    ><BarChart
-  /></ChartCardElement>
+    ><ChartBar
+  /></ChartCardWrapper>
 
-  <ChartCardElement
+  <ChartCardWrapper
     class="col-span-12"
     :fadein="$route.query.fromDash === 'true'"
-    ><BarChart
-  /></ChartCardElement>
+    ><ChartBar
+  /></ChartCardWrapper>
 
-  <ChartCardElement
+  <ChartCardWrapper
     class="col-span-12"
     :fadein="$route.query.fromDash === 'true'"
-    ><BarChart
-  /></ChartCardElement>
+    ><ChartBar
+  /></ChartCardWrapper>
 </template>
 
 <style>

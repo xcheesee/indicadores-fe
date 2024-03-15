@@ -1,99 +1,86 @@
 <script setup>
-import Select from "@/components/input/Select.vue";
-import { Sidebar, SidebarBtn } from "@/components/sidebar";
-import { Filter } from "@/components/filter";
-import {
-  ChartCardElement,
-  PieChart,
-  BarChart,
-  LineChart,
-} from "@/components/charts";
-import { Icon } from "@iconify/vue";
-import { onMounted } from "vue";
-import { TooltipWrapper, TooltipText } from "@/components/tooltip";
-import SelectValue from "@/components/input/SelectValue.vue";
-import IconBtn from "@/components/input/IconBtn.vue";
-
 onMounted(() => {
   window.scrollTo(0, 0);
 });
 </script>
 <template>
-  <Sidebar>
-    <div class="flex gap-4 px-4">
-      <Icon icon="ic:round-folder" width="32" />
-      <Select
-        name="projeto"
-        id="projeto"
-        class="h-8 w-full rounded bg-secondary-50 px-2"
-        tabindex="100"
-        placeholder="Selecione um Projeto"
-      >
-        <SelectValue value="1">Biosampa</SelectValue>
-      </Select>
-    </div>
+  <ClientOnly>
+    <SidebarElement>
+      <div class="flex gap-4 px-4">
+        <Icon name="ic:round-folder" size="32" />
+        <InputSelect
+          name="projeto"
+          id="projeto"
+          class="h-8 w-full rounded bg-secondary-50 px-2"
+          tabindex="100"
+          placeholder="Selecione um Projeto"
+        >
+          <InputSelectValue value="1">Biosampa</InputSelectValue>
+        </InputSelect>
+      </div>
 
-    <SidebarBtn icone="ic:round-air" title="Ar" collapsable active />
-    <SidebarBtn icone="ph:plant" title="Plantil" collapsable />
-    <SidebarBtn icone="mdi:forest" title="Área Verde Pública" />
-    <SidebarBtn icone="mdi:water" title="Água" />
-    <SidebarBtn icone="mdi:education-outline" title="Treinamento" />
-    <SidebarBtn icone="mdi:paw" title="Fauna" />
-  </Sidebar>
+      <SidebarBtn icone="ic:round-air" title="Ar" collapsable active />
+      <SidebarBtn icone="ph:plant" title="Plantil" collapsable />
+      <SidebarBtn icone="mdi:forest" title="Área Verde Pública" />
+      <SidebarBtn icone="mdi:water" title="Água" />
+      <SidebarBtn icone="mdi:education-outline" title="Treinamento" />
+      <SidebarBtn icone="mdi:paw" title="Fauna" />
+    </SidebarElement>
 
-  <main
-    class="flex min-h-screen flex-col bg-primary-200 pl-20 pr-4"
-    id="container"
-  >
-    <div class="flex w-full items-end gap-4 px-4 py-3">
-      <h1 class="text-5xl font-bold text-primary-900">
-        {{ $route.params.name }}
-      </h1>
+    <main
+      class="flex min-h-screen flex-col bg-primary-200 pl-20 pr-4"
+      id="container"
+    >
+      <div class="flex w-full items-end gap-4 px-4 py-3">
+        <h1 class="text-5xl font-bold text-primary-900">
+          {{ $route.params.name }}
+        </h1>
 
-      <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
-        <TooltipWrapper>
-          <IconBtn color="primary">
-            <Icon
-              icon="fluent:document-data-16-filled"
-              width="24"
-              class="cursor-pointer text-primary-600"
-            />
-          </IconBtn>
+        <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
+          <TooltipWrapper>
+            <InputIconBtn color="primary">
+              <Icon
+                name="fluent:document-data-16-filled"
+                size="24"
+                class="cursor-pointer text-primary-600"
+              />
+            </InputIconBtn>
 
-          <TooltipText>
-            <p class="whitespace-nowrap text-sm font-medium">
-              Tabela de Dados
-            </p></TooltipText
-          >
-        </TooltipWrapper>
-      </Transition>
+            <TooltipText>
+              <p class="whitespace-nowrap text-sm font-medium">
+                Tabela de Dados
+              </p></TooltipText
+            >
+          </TooltipWrapper>
+        </Transition>
 
-      <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
-        <TooltipWrapper>
-          <IconBtn color="primary">
-            <Icon
-              icon="icomoon-free:database"
-              width="24"
-              class="cursor-pointer text-primary-600"
-            />
-          </IconBtn>
+        <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
+          <TooltipWrapper>
+            <InputIconBtn color="primary">
+              <Icon
+                name="icomoon-free:database"
+                size="24"
+                class="cursor-pointer text-primary-600"
+              />
+            </InputIconBtn>
 
-          <TooltipText
-            ><p class="whitespace-nowrap text-sm font-medium">
-              Indicadores
-            </p></TooltipText
-          >
-        </TooltipWrapper>
-      </Transition>
+            <TooltipText
+              ><p class="whitespace-nowrap text-sm font-medium">
+                Indicadores
+              </p></TooltipText
+            >
+          </TooltipWrapper>
+        </Transition>
 
-      <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
-        <Filter />
-      </Transition>
-    </div>
-    <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4">
-      <slot />
-    </div>
-  </main>
+        <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
+          <FilterElement />
+        </Transition>
+      </div>
+      <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4">
+        <slot />
+      </div>
+    </main>
+  </ClientOnly>
 </template>
 
 <style>

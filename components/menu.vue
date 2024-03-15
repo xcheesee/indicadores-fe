@@ -1,6 +1,5 @@
 <script setup>
 //para adicionar popup menu a um elemento, passar o evento de click para o metodo toggle
-import { nextTick, onMounted, ref, watch } from "vue";
 import { clickAwayStore } from "@/utils/store";
 
 const show = ref(false);

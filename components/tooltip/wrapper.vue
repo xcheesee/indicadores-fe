@@ -1,8 +1,4 @@
-<script setup>
-const props = defineProps({
-  sx: String,
-});
-</script>
+<script setup></script>
 <template>
   <div class="group relative transition-opacity">
     <slot></slot>

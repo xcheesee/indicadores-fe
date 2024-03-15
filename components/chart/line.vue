@@ -10,7 +10,6 @@ import {
 } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import VChart from "vue-echarts";
-import { ref } from "vue";
 
 use([
   TitleComponent,

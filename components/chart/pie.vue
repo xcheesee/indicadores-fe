@@ -8,7 +8,6 @@ import {
   LegendComponent,
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
-import { ref, provide } from "vue";
 
 use([
   CanvasRenderer,

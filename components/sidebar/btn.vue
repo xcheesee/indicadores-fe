@@ -1,7 +1,4 @@
 <script setup>
-import { Icon } from "@iconify/vue";
-import { onBeforeUnmount, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
 const { title, icone, collapsable, id, active } = defineProps({
   title: String,
   icone: String,
@@ -9,8 +6,6 @@ const { title, icone, collapsable, id, active } = defineProps({
   id: Number,
   active: Boolean,
 });
-
-const router = useRouter();
 
 const open = ref(false);
 const collParent = ref(null);
@@ -60,15 +55,15 @@ onBeforeUnmount(() => {
       ref="collSibling"
       @click="expandSelection"
     >
-      <Icon :icon="icone" width="32" />
+      <Icon :name="icone" size="32" />
 
       <div class="grid grid-cols-[1fr_min-content] items-center">
         <p>{{ title }}</p>
         <Icon
-          icon="mdi:chevron-up"
+          name="mdi:chevron-up"
           class="transition-transform"
           :class="[open ? 'rotate-180' : '']"
-          width="32"
+          size="32"
         />
       </div>
     </div>
@@ -129,7 +124,7 @@ onBeforeUnmount(() => {
       }
     "
   >
-    <Icon :icon="icone" width="32" />
+    <Icon :name="icone" size="32" />
     <div>{{ title }}</div>
   </button>
 </template>

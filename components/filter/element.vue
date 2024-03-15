@@ -2,7 +2,6 @@
 import { onBeforeUnmount, onMounted, onUnmounted } from "vue";
 import { clickAwayStore } from "@/utils/store";
 import { Icon } from "@iconify/vue";
-import FilterSelect from "./filterSelect.vue";
 
 function animateEnterFilter(e) {
   const container = e.currentTarget;

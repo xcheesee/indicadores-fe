@@ -4,7 +4,6 @@ import { BarChart } from "echarts/charts";
 import { GridComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import VChart from "vue-echarts";
-import { ref, provide } from "vue";
 
 use([GridComponent, BarChart, CanvasRenderer]);
 

@@ -1,6 +1,4 @@
-<script setup>
-import { Icon } from "@iconify/vue";
-</script>
+<script setup></script>
 <template>
   <div class="relative mx-auto w-[720px] overflow-hidden">
     <input
@@ -9,9 +7,9 @@ import { Icon } from "@iconify/vue";
       tabindex="99"
     />
     <Icon
-      icon="mdi:search"
+      name="mdi:search"
       class="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer text-neutral-500"
-      width="36"
+      size="36"
     />
   </div>
 </template>

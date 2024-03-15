@@ -1,13 +1,10 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
 const props = defineProps({
   texto: String,
 });
 
 const container = ref(null);
 const transitionContainer = ref(false);
-const router = useRouter();
 
 async function triggerPageTransition(e) {
   //preparando botao para realizar transicao
