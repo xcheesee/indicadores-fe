@@ -72,39 +72,23 @@ onBeforeUnmount(() => {
       class="h-0 w-full overflow-hidden pl-8 transition-[height] duration-300"
       ref="collEle"
     >
-      <div class="flex flex-col gap-4 pt-4">
-        <button
+      <div class="flex flex-col pt-4">
+        <NuxtLink
           tabindex="100"
-          @click="
-            async (e) => {
-              e.preventDefault();
-              e.currentTarget.blur();
-              return await navigateTo({
-                path: `/charts/${title}1`,
-                query: { fromDash: 'false' },
-              });
-            }
-          "
-          class="w-full hover:bg-primary-200 hover:font-bold hover:text-primary-800 focus:bg-primary-200 focus:font-bold focus:text-primary-800"
+          :to="`/charts/${title}1`"
+          @click="(e) => e.currentTarget.blur()"
+          class="w-full pl-2 hover:bg-primary-200 hover:font-bold py-2 hover:text-primary-800 focus:bg-primary-200 focus:font-bold focus:text-primary-800"
         >
           {{ title }}1
-        </button>
-        <button
+        </NuxtLink>
+        <NuxtLink
           tabindex="100"
-          @click="
-            (e) => {
-              e.preventDefault();
-              e.currentTarget.blur();
-              return navigateTo({
-                path: `/charts/${title}2`,
-                query: { fromDash: 'false' },
-              });
-            }
-          "
-          class="hover:bg-primary-200 hover:font-bold hover:text-primary-800 focus:bg-primary-200 focus:font-bold focus:text-primary-800"
+          :to="`/charts/${title}2`"
+          @click="(e) => e.currentTarget.blur()"
+          class="w-full pl-2 hover:bg-primary-200 py-2 hover:font-bold hover:text-primary-800 focus:bg-primary-200 focus:font-bold focus:text-primary-800"
         >
           {{ title }}2
-        </button>
+        </NuxtLink>
       </div>
     </div>
   </div>

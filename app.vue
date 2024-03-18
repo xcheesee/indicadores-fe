@@ -4,6 +4,18 @@
   </NuxtLayout>
 </template>
 <style>
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3fc88c;
+  border-radius: 10px;
+  border: 2px solid #f0f9ff;
+}
+::-webkit-scrollbar-track {
+  background: #f0f9ff;
+}
 .fadein-enter-from {
   opacity: 0;
 }
