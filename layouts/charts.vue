@@ -4,7 +4,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <ClientOnly>
+  <div>
     <SidebarElement>
       <div class="flex gap-4 px-4">
         <Icon name="ic:round-folder" size="32" />
@@ -26,61 +26,8 @@ onMounted(() => {
       <SidebarBtn icone="mdi:education-outline" title="Treinamento" />
       <SidebarBtn icone="mdi:paw" title="Fauna" />
     </SidebarElement>
-
-    <main
-      class="flex min-h-screen flex-col bg-primary-200 pl-20 pr-4"
-      id="container"
-    >
-      <div class="flex w-full items-end gap-4 px-4 py-3">
-        <h1 class="text-5xl font-bold text-primary-900">
-          {{ $route.params.name }}
-        </h1>
-
-        <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
-          <TooltipWrapper>
-            <InputIconBtn color="primary">
-              <Icon
-                name="fluent:document-data-16-filled"
-                size="24"
-                class="cursor-pointer text-primary-600"
-              />
-            </InputIconBtn>
-
-            <TooltipText>
-              <p class="whitespace-nowrap text-sm font-medium">
-                Tabela de Dados
-              </p></TooltipText
-            >
-          </TooltipWrapper>
-        </Transition>
-
-        <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
-          <TooltipWrapper>
-            <InputIconBtn color="primary">
-              <Icon
-                name="icomoon-free:database"
-                size="24"
-                class="cursor-pointer text-primary-600"
-              />
-            </InputIconBtn>
-
-            <TooltipText
-              ><p class="whitespace-nowrap text-sm font-medium">
-                Indicadores
-              </p></TooltipText
-            >
-          </TooltipWrapper>
-        </Transition>
-
-        <Transition name="fadein" :appear="$route.query.fromDash === 'true'">
-          <FilterElement />
-        </Transition>
-      </div>
-      <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4">
-        <slot />
-      </div>
-    </main>
-  </ClientOnly>
+    <slot />
+  </div>
 </template>
 
 <style>

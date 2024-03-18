@@ -10,10 +10,8 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
   tailwindcss: {
     configPath: "tailwind.config",
-    exposeConfig: false,
-    exposeLevel: 2,
+    exposeConfig: { level: 2, },
     config: {},
-    injectPosition: "first",
     viewer: true,
   },
   vite: {

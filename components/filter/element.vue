@@ -1,8 +1,6 @@
 <script setup>
-import { onBeforeUnmount, onMounted, onUnmounted } from "vue";
-import { clickAwayStore } from "@/utils/store";
-import { Icon } from "@iconify/vue";
-
+const filterIcon = ref(null);
+const searchIcon = ref(null);
 function animateEnterFilter(e) {
   const container = e.currentTarget;
   const filter = container.children[1];
@@ -29,8 +27,6 @@ function animateLeaveFilter(e) {
 
 onMounted(() => {
   const container = document.getElementById("filter-container");
-  const filter = document.getElementById("filter-ele");
-  const search = document.getElementById("search-ele");
 
   container.style.cursor = "pointer";
   ["click", "focusin"].forEach((event) => {
@@ -41,8 +37,8 @@ onMounted(() => {
 
   clickAwayStore.instance.register(container, () => {
     if (!container.classList.contains("activ")) return;
-    filter.style.opacity = 1;
-    search.style.opacity = 0;
+    filterIcon.value.style.opacity = 1;
+    searchIcon.value.style.opacity = 0;
     container.style.width = "48px";
     container.style.cursor = "pointer";
     container.classList.remove("activ");
@@ -81,19 +77,19 @@ onBeforeUnmount(() => {
       />
     </div>
 
-    <Icon
-      icon="mdi:filter"
-      width="32"
+    <div
       class="absolute right-0 top-1/2 -translate-x-1/4 -translate-y-1/2 transition-opacity"
-      id="filter-ele"
-    />
+      ref="filterIcon"
+    >
+      <Icon name="mdi:filter" size="32" />
+    </div>
 
-    <Icon
-      icon="mdi:search"
-      width="32"
+    <div
       class="absolute right-0 top-1/2 -translate-x-1/4 -translate-y-1/2 opacity-0 transition-opacity"
-      id="search-ele"
-    />
+      ref="searchIcon"
+    >
+      <Icon name="mdi:search" size="32" />
+    </div>
   </div>
 </template>
 

@@ -1,6 +1,4 @@
 <script setup>
-import { worldStore } from "~/utils/store";
-
 let aFrame;
 
 onMounted(() => {

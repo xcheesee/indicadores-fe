@@ -4,7 +4,8 @@
   <ClientOnly>
     <div>
       <header id="header" class="relative grid w-full items-center">
-        <div
+        <NuxtLink
+          to="/"
           class="mt-8 flex h-32 justify-center transition-all duration-300"
           id="header-img-container"
         >
@@ -12,9 +13,8 @@
             src="@/assets/images/geo5.png"
             alt=""
             class="h-full object-contain hover:cursor-pointer"
-            @click="navigateTo('/')"
           />
-        </div>
+        </NuxtLink>
       </header>
 
       <nav class="grid h-[600px] content-center justify-center">

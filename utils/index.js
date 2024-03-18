@@ -1,12 +1,15 @@
-export function clickAwayListener(element, callback) {
-  document.addEventListener("click", (e) => {
-    if (!element.contains(e.target)) callback();
-  });
-}
+import { World } from "~/three/world";
+
+//export function clickAwayListener(element, callback) {
+//  document.addEventListener("click", (e) => {
+//    if (!element.contains(e.target)) callback();
+//  });
+//}
+
 let instance;
 
 //classe que cria um eventListener que percorre uma lista de { HTMLElements, callbacks }, utilizada para fechar elementos expandiveis quando houver um clique fora deste elemento, recomendavel cadastrar apenas elementos que possuem ids unicos, para que o metodo remove funcione corretamente.
-export class ClickAway {
+class ClickAway {
   elementArr = [];
   constructor() {
     if (instance) {
@@ -25,7 +28,13 @@ export class ClickAway {
     this.elementArr.push({ node, callback });
   }
 
-  remove(node) {
-    this.elementArr = this.elementArr.filter((ele) => ele.id !== node.id);
-  }
+  //remove(node) {
+  //  this.elementArr = this.elementArr.filter((ele) => ele.id !== node.id);
+  //}
 }
+
+export const clickAwayStore = {
+  instance: new ClickAway(),
+};
+
+export const worldStore = new World();
