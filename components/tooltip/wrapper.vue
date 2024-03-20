@@ -1,6 +1,10 @@
 <script setup></script>
 <template>
-  <div class="group relative transition-opacity">
-    <slot></slot>
-  </div>
+  <ClientOnly>
+    <FadeinTransition>
+      <div class="group relative transition-opacity" :class="$attrs.class">
+        <slot></slot>
+      </div>
+    </FadeinTransition>
+  </ClientOnly>
 </template>

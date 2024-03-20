@@ -30,7 +30,7 @@ async function triggerPressAnimation(element) {
 
   return await Promise.all([
     element.animate(pressAnimation, pressTiming).finished,
-    parent.animate(transitionAnimation, pressTiming).finished,
+    //parent.animate(transitionAnimation, pressTiming).finished,
   ]);
 }
 </script>
@@ -44,7 +44,7 @@ async function triggerPressAnimation(element) {
   <button
     @click="
       async (e) => {
-        await triggerPressAnimation(e.currentTarget);
+        triggerPressAnimation(e.currentTarget);
         return navigateTo({ path: rota, query: { fromDash: 'true' } });
       }
     "

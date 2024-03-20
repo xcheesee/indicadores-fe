@@ -1,6 +1,5 @@
 <script setup>
 const route = useRoute();
-console.log(route.query.fromDash);
 </script>
 <template>
   <ClientOnly>
@@ -10,10 +9,10 @@ console.log(route.query.fromDash);
         id="sidebar-container"
       >
         <div class="flex h-full w-[300px] flex-col gap-8" id="sidebar">
-          <NuxtLink to="/dashboard" class="flex px-4 pb-16 pt-4">
+          <NuxtLink to="/dashboard" class="flex px-4 pb-16 pt-4" tabindex="-1">
             <div class="h-11">
               <img
-                src="@/assets/images/geo5.png"
+                src="@/assets/images/geo.png"
                 class="h-full w-full cursor-pointer object-fill transition-transform duration-300 ease-in-out hover:scale-110"
               />
             </div>

@@ -16,11 +16,14 @@
 ::-webkit-scrollbar-track {
   background: #f0f9ff;
 }
-.fadein-enter-from {
-  opacity: 0;
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 500ms cubic-bezier(0.2, 0, 0.4, 1);
 }
 
-.fadein-enter-active {
-  transition: opacity 500ms cubic-bezier(0.2, 0, 0.4, 1);
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
 }
 </style>

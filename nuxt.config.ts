@@ -1,6 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import glsl from 'vite-plugin-glsl';
 export default defineNuxtConfig({
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in'}
+  },
   devtools: { enabled: true },
   pages: true,
   ssr: false,

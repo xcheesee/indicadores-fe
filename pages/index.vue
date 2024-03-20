@@ -1,14 +1,6 @@
 <script setup></script>
 
 <template>
-  <header class="relative">
-    <div class="flex h-40 items-center justify-center pt-8">
-      <div class="z-50 flex h-full w-full justify-center">
-        <img src="@/assets/images/geo5.png" alt="" class="object-fit" />
-      </div>
-    </div>
-  </header>
-
   <main
     class="mx-auto grid h-full w-[1440px] flex-1 grid-cols-4 place-content-center items-center gap-4 transition-opacity duration-500"
   >

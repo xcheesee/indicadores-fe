@@ -22,7 +22,7 @@ class Particles {
   initPoints(discard) {
     this.numPoints = this.width * this.height;
     const geometry = new THREE.InstancedBufferGeometry();
-    let numVisible = 0;
+    let numVisible = this.numPoints
     let threshold = 0;
     let originalColors;
 

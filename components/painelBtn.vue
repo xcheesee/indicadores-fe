@@ -116,32 +116,33 @@ function createFixedCloneEle(ele, eleType) {
 </script>
 
 <template>
-  <div
-    class="absolute left-0 top-0 z-20 h-full w-full"
-    :class="transitionContainer ? '' : 'hidden'"
-    ref="container"
-  ></div>
-
-  <button
-    @click="
-      async (e) => {
-        await triggerPageTransition(e);
-        return navigateTo({
-          path: `/charts/${texto}`,
-          query: { fromDash: 'true' },
-        });
-      }
-    "
-    class="relative flex h-48 w-full cursor-pointer items-center justify-center gap-4 rounded border-2 border-primary-500 bg-secondary-50 py-4 shadow-lg *:text-primary-700 hover:border-primary-800 hover:bg-primary-300 focus:border-primary-800 focus:bg-primary-300"
-    :class="$attrs.class"
-  >
-    <div class="flex items-center justify-center gap-4 px-4">
-      <slot name="icone"></slot>
-      <p class="justify-self-start text-center text-3xl font-bold">
-        {{ texto }}
-      </p>
-    </div>
-  </button>
+  <ClientOnly>
+    <div
+      class="absolute left-0 top-0 z-20 h-full w-full"
+      :class="transitionContainer ? '' : 'hidden'"
+      ref="container"
+    ></div>
+    <button
+      @click="
+        async (e) => {
+          await triggerPageTransition(e);
+          return navigateTo({
+            path: `/charts/${texto}`,
+            query: { fromDash: 'true' },
+          });
+        }
+      "
+      class="relative flex h-48 w-full cursor-pointer items-center justify-center gap-4 rounded border-2 border-primary-500 bg-secondary-50 py-4 shadow-lg *:text-primary-700 hover:border-primary-800 hover:bg-primary-300 focus:border-primary-800 focus:bg-primary-300"
+      :class="$attrs.class"
+    >
+      <div class="flex items-center justify-center gap-4 px-4">
+        <slot name="icone"></slot>
+        <p class="justify-self-start text-center text-3xl font-bold">
+          {{ texto }}
+        </p>
+      </div>
+    </button>
+  </ClientOnly>
 </template>
 <style scoped>
 button {
