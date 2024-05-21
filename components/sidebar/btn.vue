@@ -47,6 +47,7 @@ onBeforeUnmount(() => {
   <div class="relative" v-if="collapsable" ref="collParent">
     <div
       v-if="active"
+      :id="'botao' + randomId"
       class="absolute left-0 h-full w-[6px] bg-primary-500"
     ></div>
 

@@ -1,5 +1,6 @@
 <script setup>
 const props = defineProps(["placeholder", "twClass", "name", "id"]);
+const value = defineModel();
 </script>
 <template>
   <ClientOnly>
@@ -11,10 +12,13 @@ const props = defineProps(["placeholder", "twClass", "name", "id"]);
           :id="id"
           class="border-2 border-transparent px-2 py-1 focus:border-primary-800 focus:bg-primary-100"
           :class="$attrs.class"
+          v-model="value"
           @input="(e) => (e.target.style.color = 'black')"
           :tabindex="$attrs.tabindex"
         >
-          <option value="" hidden selected disabled>{{ placeholder }}</option>
+          <option value="" hidden selected disabled>
+            {{ placeholder }}
+          </option>
           <slot />
         </select>
       </label>

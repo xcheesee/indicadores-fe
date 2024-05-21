@@ -1,4 +1,27 @@
-<script setup></script>
+<script setup>
+import { useQuery } from "@tanstack/vue-query";
+
+async function fetcher() {
+  return await fetch("http://localhost:8000/api/indicadores").then((response) =>
+    response.json(),
+  );
+}
+const selectedProjeto = ref(0);
+const { data: indicadores, suspense } = useQuery({
+  queryKey: ["indicadores"],
+  queryFn: fetcher,
+});
+
+const filteredIndicadores = computed(() => {
+  if (!indicadores.value || selectedProjeto.value === "") return [];
+  if (selectedProjeto.value === 0) {
+    return indicadores.value.data;
+  }
+  return indicadores.value.data.filter(
+    (indicador) => indicador.projeto_id === selectedProjeto.value,
+  );
+});
+</script>
 
 <template>
   <div>
@@ -13,6 +36,7 @@
             name="projeto"
             id="projeto"
             class="h-8 w-full rounded bg-primary-100 px-2"
+            v-model="selectedProjeto"
             tabindex="100"
             placeholder="Selecione um Projeto"
           >
@@ -20,20 +44,22 @@
               <p class="text-xl font-bold text-primary-800">Projeto</p>
             </template>
 
-            <InputSelectValue value="2">Todos</InputSelectValue>
+            <InputSelectValue :value="0">Todos</InputSelectValue>
 
-            <InputSelectValue value="1">Biosampa</InputSelectValue>
+            <InputSelectValue :value="1">Biosampa</InputSelectValue>
           </InputSelect>
         </div>
       </div>
 
-      <PainelBtn texto="Agua" class="col-span-3">
-        <template #icone>
-          <Icon name="ion:water" size="64" />
-        </template>
-      </PainelBtn>
+      <template v-for="indicador in filteredIndicadores">
+        <PainelBtn :texto="indicador.nome" class="col-span-3">
+          <template #icone>
+            <Icon name="ion:water" size="64" />
+          </template>
+        </PainelBtn>
+      </template>
 
-      <PainelBtn texto="Ar" class="col-span-3">
+      <!--<PainelBtn texto="Ar" class="col-span-3">
         <template #icone>
           <Icon name="ph:wind" size="64" />
         </template>
@@ -115,7 +141,7 @@
         <template #icone>
           <Icon name="ph:certificate" size="64" />
         </template>
-      </PainelBtn>
+      </PainelBtn>-->
     </main>
   </div>
 </template>
