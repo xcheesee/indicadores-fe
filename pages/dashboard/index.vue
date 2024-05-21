@@ -1,15 +1,20 @@
 <script setup>
 import { useQuery } from "@tanstack/vue-query";
 
-async function fetcher() {
-  return await fetch("http://localhost:8000/api/indicadores").then((response) =>
+async function fetcher(url) {
+  return await fetch("http://localhost:8000/api" + url).then((response) =>
     response.json(),
   );
 }
 const selectedProjeto = ref(0);
-const { data: indicadores, suspense } = useQuery({
+const { data: indicadores, isPending: loadingIndicadores } = useQuery({
   queryKey: ["indicadores"],
-  queryFn: fetcher,
+  queryFn: () => fetcher("/indicadores"),
+});
+
+const { data: projetos, isPending: loadingProjetos } = useQuery({
+  queryKey: ["projetos"],
+  queryFn: () => fetcher("/projetos"),
 });
 
 const filteredIndicadores = computed(() => {
@@ -32,7 +37,9 @@ const filteredIndicadores = computed(() => {
     <main class="mx-auto grid w-[60%] grid-cols-12 gap-3 pb-8">
       <div class="col-span-12 grid grid-cols-subgrid">
         <div class="col-span-4 flex flex-col gap-1">
+          <div v-if="loadingProjetos">Carregando...</div>
           <InputSelect
+            v-else
             name="projeto"
             id="projeto"
             class="h-8 w-full rounded bg-primary-100 px-2"
@@ -43,21 +50,25 @@ const filteredIndicadores = computed(() => {
             <template #label>
               <p class="text-xl font-bold text-primary-800">Projeto</p>
             </template>
-
             <InputSelectValue :value="0">Todos</InputSelectValue>
-
-            <InputSelectValue :value="1">Biosampa</InputSelectValue>
+            <template v-for="projeto in projetos.data">
+              <InputSelectValue :value="projeto.id">{{
+                projeto.nome
+              }}</InputSelectValue>
+            </template>
           </InputSelect>
         </div>
       </div>
-
-      <template v-for="indicador in filteredIndicadores">
-        <PainelBtn :texto="indicador.nome" class="col-span-3">
-          <template #icone>
-            <Icon name="ion:water" size="64" />
-          </template>
-        </PainelBtn>
-      </template>
+      <div v-if="loadingIndicadores">Carregando Indicadores</div>
+      <div v-else class="col-span-12 grid grid-cols-subgrid">
+        <template v-for="indicador in filteredIndicadores">
+          <PainelBtn :texto="indicador.nome" class="col-span-3">
+            <template #icone>
+              <Icon name="ion:water" size="64" />
+            </template>
+          </PainelBtn>
+        </template>
+      </div>
 
       <!--<PainelBtn texto="Ar" class="col-span-3">
         <template #icone>
