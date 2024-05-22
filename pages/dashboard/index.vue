@@ -59,8 +59,13 @@ const filteredIndicadores = computed(() => {
           </InputSelect>
         </div>
       </div>
+
       <div v-if="loadingIndicadores">Carregando Indicadores</div>
-      <div v-else class="col-span-12 grid grid-cols-subgrid">
+
+      <div
+        v-else
+        class="flex col-span-12 flex-wrap gap-4 *:basis-[25%] *:grow *: shrink-0"
+      >
         <template v-for="indicador in filteredIndicadores">
           <PainelBtn :texto="indicador.nome" class="col-span-3">
             <template #icone>
@@ -69,90 +74,91 @@ const filteredIndicadores = computed(() => {
           </PainelBtn>
         </template>
       </div>
+      <!--<div class="flex col-span-12 flex-wrap gap-4 *:grow *:shrink-0">
+        <PainelBtn texto="Ar" class="">
+          <template #icone>
+            <Icon name="ph:wind" size="64" />
+          </template>
+        </PainelBtn>
 
-      <!--<PainelBtn texto="Ar" class="col-span-3">
-        <template #icone>
-          <Icon name="ph:wind" size="64" />
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Área verde pública" class="col-span-6">
+          <template #icone>
+            <Icon name="healthicons:forest" size="64" />
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Área verde pública" class="col-span-6">
-        <template #icone>
-          <Icon name="healthicons:forest" size="64" />
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Cobertura vegetal" class="col-span-4">
+          <template #icone>
+            <Icon name="foundation:trees" size="64" />
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Cobertura vegetal" class="col-span-4">
-        <template #icone>
-          <Icon name="foundation:trees" size="64" />
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Licenciamento Ambiental" class="col-span-8">
+          <template #icone>
+            <Icon name="ph:certificate" size="64" />
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Licenciamento Ambiental" class="col-span-8">
-        <template #icone>
-          <Icon name="ph:certificate" size="64" />
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Fauna" class="col-span-3">
+          <template #icone>
+            <Icon name="mdi:paw" size="64" />
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Fauna" class="col-span-3">
-        <template #icone>
-          <Icon name="mdi:paw" size="64" />
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Biosampa" class="col-span-3">
+          <template #icone>
+            <div class="relative h-32 w-32">
+              <img
+                src="@/assets/icons/biosampa.svg"
+                alt=""
+                class="absolute h-full w-full object-contain"
+              />
+            </div>
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Biosampa" class="col-span-3">
-        <template #icone>
-          <div class="">
-            <img
-              src="@/assets/icons/biosampa.svg"
-              alt=""
-              class="h-full w-full object-fill"
-            />
-          </div>
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Novo projeto NDTIC" class="col-span-6">
+          <template #icone>
+            <div class="relative h-32 w-32">
+              <img
+                src="@/assets/icons/ndtic.svg"
+                alt=""
+                class="absolute h-full w-full object-contain"
+              />
+            </div>
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Novo projeto NDTIC" class="col-span-6">
-        <template #icone>
-          <div class="relative h-32 w-32">
-            <img
-              src="@/assets/icons/ndtic.svg"
-              alt=""
-              class="absolute h-full w-full object-contain"
-            />
-          </div>
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Treinamento - CPA\DIA" class="col-span-6">
+          <template #icone>
+            <Icon name="mdi:book-education" size="64" />
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Treinamento - CPA\DIA" class="col-span-6">
-        <template #icone>
-          <Icon name="mdi:book-education" size="64" />
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Solo" class="col-span-3">
+          <template #icone>
+            <div class="relative w-16 h-16">
+              <img
+                src="@/assets/icons/planta_mao.svg"
+                alt=""
+                class="absolute h-full w-full object-contain"
+              />
+            </div>
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Solo" class="col-span-3">
-        <template #icone>
-          <div class="h-16">
-            <img
-              src="@/assets/icons/planta_mao.svg"
-              alt=""
-              class="h-full w-full object-fill"
-            />
-          </div>
-        </template>
-      </PainelBtn>
+        <PainelBtn texto="Treinamento - CLA" class="col-span-3">
+          <template #icone> 
+            <Icon name="mdi:book-education" size="64" />
+          </template>
+        </PainelBtn>
 
-      <PainelBtn texto="Treinamento - CLA" class="col-span-3">
-        <template #icone>
-          <Icon name="mdi:book-education" size="64" />
-        </template>
-      </PainelBtn>
-
-      <PainelBtn texto="Licenciamento Ambiental de NDTIC" class="col-span-12">
-        <template #icone>
-          <Icon name="ph:certificate" size="64" />
-        </template>
-      </PainelBtn>-->
+        <PainelBtn texto="Licenciamento Ambiental de NDTIC" class="col-span-12">
+          <template #icone>
+            <Icon name="ph:certificate" size="64" />
+          </template>
+        </PainelBtn>
+      </div>-->
     </main>
   </div>
 </template>
