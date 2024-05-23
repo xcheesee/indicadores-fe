@@ -39,7 +39,7 @@ const filteredIndicadores = computed(() => {
           v-else
           name="projeto"
           id="projeto"
-          class="h-8 w-full rounded bg-primary-100 px-2"
+          class="h-8 w-full rounded bg-white px-2"
           v-model="selectedProjeto"
           tabindex="100"
           placeholder="Selecione um Projeto"
@@ -69,7 +69,9 @@ const filteredIndicadores = computed(() => {
       <template v-for="indicador in filteredIndicadores">
         <PainelBtn :texto="indicador.nome" class="col-span-3">
           <template #icone>
-            <Icon name="ion:water" size="64" />
+            <div>
+              <img :src="indicador.imagem" alt="" />
+            </div>
           </template>
         </PainelBtn>
       </template>

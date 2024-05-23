@@ -4,7 +4,7 @@
     <Transition appear name="expand">
       <div class="relative ml-auto w-[720px] overflow-hidden">
         <input
-          class="w-full rounded border-2 border-primary-500 bg-secondary-50 pl-4 shadow focus:border-primary-800 focus:bg-secondary-100"
+          class="w-full rounded border-2 border-slate-800 bg-white pl-4 shadow focus:border-primary-800 focus:bg-secondary-100"
           placeholder="Pesquisar"
           tabindex="99"
         />

@@ -132,7 +132,7 @@ function createFixedCloneEle(ele, eleType) {
           });
         }
       "
-      class="relative flex h-48 cursor-pointer items-center justify-center gap-4 rounded border-2 border-primary-500 bg-secondary-50 py-4 shadow-lg *:text-primary-700 hover:border-primary-800 hover:bg-primary-300 focus:border-primary-800 focus:bg-primary-300"
+      class="relative flex h-48 cursor-pointer items-center justify-center gap-4 rounded border-2 border-slate-600 bg-white py-4 shadow-lg *:text-slate-800 hover:border-slate-800 hover:bg-slate-200 focus:border-slate-800 focus:bg-slate-200"
       :class="$attrs.class"
     >
       <div class="flex items-center justify-center gap-4 px-4">
