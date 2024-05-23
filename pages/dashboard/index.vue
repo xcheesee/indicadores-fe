@@ -34,7 +34,12 @@ const filteredIndicadores = computed(() => {
   >
     <div class="col-span-12 grid grid-cols-subgrid gap-4 items-end justify-end">
       <div class="col-span-4 flex flex-col gap-1">
-        <div v-if="loadingProjetos">Carregando...</div>
+        <div
+          v-if="loadingProjetos"
+          class="col-span-4 grid items-center justify-center"
+        >
+          <CircularSpinner />
+        </div>
         <InputSelect
           v-else
           name="projeto"
@@ -60,7 +65,12 @@ const filteredIndicadores = computed(() => {
       </div>
     </div>
 
-    <div v-if="loadingIndicadores">Carregando Indicadores</div>
+    <div
+      v-if="loadingIndicadores"
+      class="grid col-span-12 h-[300px] justify-center items-center"
+    >
+      <CircularSpinner />
+    </div>
 
     <div
       v-else
