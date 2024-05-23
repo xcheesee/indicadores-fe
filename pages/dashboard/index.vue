@@ -2,8 +2,8 @@
 import { useQuery } from "@tanstack/vue-query";
 
 async function fetcher(url) {
-  return await fetch("http://localhost:8000/api" + url).then((response) =>
-    response.json(),
+  return await fetch("http://10.30.18.9:81/indicadores_be/api" + url).then(
+    (response) => response.json(),
   );
 }
 const selectedProjeto = ref(0);
@@ -29,52 +29,52 @@ const filteredIndicadores = computed(() => {
 </script>
 
 <template>
-  <div>
-    <nav class="grid h-[600px] content-center justify-center">
-      <DashboardSearch />
-    </nav>
-
-    <main class="mx-auto grid w-[60%] grid-cols-12 gap-3 pb-8">
-      <div class="col-span-12 grid grid-cols-subgrid">
-        <div class="col-span-4 flex flex-col gap-1">
-          <div v-if="loadingProjetos">Carregando...</div>
-          <InputSelect
-            v-else
-            name="projeto"
-            id="projeto"
-            class="h-8 w-full rounded bg-primary-100 px-2"
-            v-model="selectedProjeto"
-            tabindex="100"
-            placeholder="Selecione um Projeto"
-          >
-            <template #label>
-              <p class="text-xl font-bold text-primary-800">Projeto</p>
-            </template>
-            <InputSelectValue :value="0">Todos</InputSelectValue>
-            <template v-for="projeto in projetos.data">
-              <InputSelectValue :value="projeto.id">{{
-                projeto.nome
-              }}</InputSelectValue>
-            </template>
-          </InputSelect>
-        </div>
+  <main
+    class="mx-auto grid w-[60%] grid-cols-12 gap-3 pb-8 self-end justify-self-end mt-[200px]"
+  >
+    <div class="col-span-12 grid grid-cols-subgrid gap-4 items-end justify-end">
+      <div class="col-span-4 flex flex-col gap-1">
+        <div v-if="loadingProjetos">Carregando...</div>
+        <InputSelect
+          v-else
+          name="projeto"
+          id="projeto"
+          class="h-8 w-full rounded bg-primary-100 px-2"
+          v-model="selectedProjeto"
+          tabindex="100"
+          placeholder="Selecione um Projeto"
+        >
+          <template #label>
+            <p class="text-xl font-bold text-primary-800">Projeto</p>
+          </template>
+          <InputSelectValue :value="0">Todos</InputSelectValue>
+          <template v-for="projeto in projetos.data">
+            <InputSelectValue :value="projeto.id">{{
+              projeto.nome
+            }}</InputSelectValue>
+          </template>
+        </InputSelect>
       </div>
-
-      <div v-if="loadingIndicadores">Carregando Indicadores</div>
-
-      <div
-        v-else
-        class="flex col-span-12 flex-wrap gap-4 *:basis-[25%] *:grow *: shrink-0"
-      >
-        <template v-for="indicador in filteredIndicadores">
-          <PainelBtn :texto="indicador.nome" class="col-span-3">
-            <template #icone>
-              <Icon name="ion:water" size="64" />
-            </template>
-          </PainelBtn>
-        </template>
+      <div class="col-span-8">
+        <DashboardSearch />
       </div>
-      <!--<div class="flex col-span-12 flex-wrap gap-4 *:grow *:shrink-0">
+    </div>
+
+    <div v-if="loadingIndicadores">Carregando Indicadores</div>
+
+    <div
+      v-else
+      class="flex col-span-12 flex-wrap gap-4 *:basis-[25%] *:grow *: shrink-0"
+    >
+      <template v-for="indicador in filteredIndicadores">
+        <PainelBtn :texto="indicador.nome" class="col-span-3">
+          <template #icone>
+            <Icon name="ion:water" size="64" />
+          </template>
+        </PainelBtn>
+      </template>
+    </div>
+    <!--<div class="flex col-span-12 flex-wrap gap-4 *:grow *:shrink-0">
         <PainelBtn texto="Ar" class="">
           <template #icone>
             <Icon name="ph:wind" size="64" />
@@ -149,7 +149,6 @@ const filteredIndicadores = computed(() => {
 
         <PainelBtn texto="Treinamento - CLA" class="col-span-3">
           <template #icone> 
-            <Icon name="mdi:book-education" size="64" />
           </template>
         </PainelBtn>
 
@@ -159,8 +158,7 @@ const filteredIndicadores = computed(() => {
           </template>
         </PainelBtn>
       </div>-->
-    </main>
-  </div>
+  </main>
 </template>
 
 <style scoped>
