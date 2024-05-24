@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
       }
     "
   >
-    <Icon :name="icone" size="32" />
+    <slot name="icone" />
     <div>{{ title }}</div>
   </button>
 </template>

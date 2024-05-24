@@ -38,3 +38,10 @@ export const clickAwayStore = {
 };
 
 export const worldStore = new World();
+
+export const fetcher = async (url) => {
+  return await fetch("http://10.30.18.9:81/indicadores_be/api" + url).then(
+    (response) => response.json(),
+  );
+};
+

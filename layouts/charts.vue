@@ -1,6 +1,16 @@
 <script setup>
+import { useQuery } from "@tanstack/vue-query";
+
 onMounted(() => {
   window.scrollTo(0, 0);
+});
+const { data: indicadores, isPending: loadingIndicadores } = useQuery({
+  queryKey: ["indicadores"],
+  queryFn: () => fetcher("/indicadores"),
+});
+const { data: projetos, isPending: loadingProjetos } = useQuery({
+  queryKey: ["projetos"],
+  queryFn: () => fetcher("/projetos"),
 });
 </script>
 <template>
@@ -8,23 +18,38 @@ onMounted(() => {
     <SidebarElement>
       <div class="flex gap-4 px-4">
         <Icon name="ic:round-folder" size="32" />
+        <div v-if="loadingProjetos">Carregando...</div>
         <InputSelect
+          v-else
           name="projeto"
           id="projeto"
           class="h-8 w-full rounded bg-secondary-50 px-2"
           tabindex="100"
           placeholder="Selecione um Projeto"
         >
-          <InputSelectValue value="1">Biosampa</InputSelectValue>
+          <template v-for="projeto in projetos.data">
+            <InputSelectValue :value="projeto.id">{{
+              projeto.nome
+            }}</InputSelectValue>
+          </template>
         </InputSelect>
       </div>
-
-      <SidebarBtn icone="ic:round-air" title="Ar" collapsable active />
-      <SidebarBtn icone="ph:plant" title="Plantil" collapsable />
-      <SidebarBtn icone="mdi:forest" title="Área Verde Pública" />
-      <SidebarBtn icone="mdi:water" title="Água" />
-      <SidebarBtn icone="mdi:education-outline" title="Treinamento" />
-      <SidebarBtn icone="mdi:paw" title="Fauna" />
+      <div v-if="loadingIndicadores">Carregando...</div>
+      <template v-else>
+        <template v-for="indicador in indicadores.data">
+          <SidebarBtn :title="indicador.nome">
+            <template #icone>
+              <div class="relative w-8 h-8">
+                <img
+                  :src="indicador.imagem"
+                  alt=""
+                  class="absolute w-full h-full"
+                />
+              </div>
+            </template>
+          </SidebarBtn>
+        </template>
+      </template>
     </SidebarElement>
     <slot />
   </div>

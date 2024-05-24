@@ -1,4 +1,6 @@
 <script setup>
+import { useQuery } from "@tanstack/vue-query";
+
 const route = useRoute();
 </script>
 <template>

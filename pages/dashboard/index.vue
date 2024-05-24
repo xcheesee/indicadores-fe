@@ -1,11 +1,11 @@
 <script setup>
 import { useQuery } from "@tanstack/vue-query";
 
-async function fetcher(url) {
-  return await fetch("http://10.30.18.9:81/indicadores_be/api" + url).then(
-    (response) => response.json(),
-  );
-}
+//async function fetcher(url) {
+//  return await fetch("http://10.30.18.9:81/indicadores_be/api" + url).then(
+//    (response) => response.json(),
+//  );
+//}
 const selectedProjeto = ref(0);
 const { data: indicadores, isPending: loadingIndicadores } = useQuery({
   queryKey: ["indicadores"],
