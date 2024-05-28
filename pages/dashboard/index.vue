@@ -79,8 +79,16 @@ const filteredIndicadores = computed(() => {
       <template v-for="indicador in filteredIndicadores">
         <PainelBtn :texto="indicador.nome" class="col-span-3">
           <template #icone>
-            <div>
-              <img :src="indicador.imagem" alt="" />
+            <div class="w-20 h-20 relative">
+              <img
+                :src="indicador.imagem"
+                alt=""
+                class="absolute w-full h-full object-fit"
+                style="
+                  filter: invert(19%) sepia(76%) saturate(3546%)
+                    hue-rotate(155deg) brightness(84%) contrast(91%);
+                "
+              />
             </div>
           </template>
         </PainelBtn>
