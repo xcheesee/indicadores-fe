@@ -1,12 +1,21 @@
 <script setup>
-const props = defineProps(["placeholder", "twClass", "name", "id"]);
+const props = defineProps({
+  placeholder: {
+    type: String,
+    default: "",
+  },
+  name: String,
+  id: String,
+});
 const value = defineModel();
 </script>
 <template>
   <ClientOnly>
     <FadeinTransition>
-      <label>
-        <slot name="label" />
+      <div class="relative">
+        <label :for="id">
+          <slot name="label" />
+        </label>
         <select
           :name="name"
           :id="id"
@@ -16,12 +25,18 @@ const value = defineModel();
           @input="(e) => (e.target.style.color = 'black')"
           :tabindex="$attrs.tabindex"
         >
-          <option value="" hidden selected disabled>
+          <option
+            v-if="placeholder !== ''"
+            value="placeholder"
+            hidden
+            selected
+            disabled
+          >
             {{ placeholder }}
           </option>
           <slot />
         </select>
-      </label>
+      </div>
     </FadeinTransition>
   </ClientOnly>
 </template>

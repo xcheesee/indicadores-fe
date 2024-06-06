@@ -1,6 +1,8 @@
 <script setup>
 import { useQuery } from "@tanstack/vue-query";
 
+const projetoModel = ref("");
+
 onMounted(() => {
   window.scrollTo(0, 0);
 });
@@ -26,7 +28,9 @@ const { data: projetos, isPending: loadingProjetos } = useQuery({
           class="h-8 w-full rounded bg-secondary-50 px-2"
           tabindex="100"
           placeholder="Selecione um Projeto"
+          v-model="projetoModel"
         >
+          <InputSelectValue value="">Todos</InputSelectValue>
           <template v-for="projeto in projetos.data">
             <InputSelectValue :value="projeto.id">{{
               projeto.nome
@@ -34,6 +38,7 @@ const { data: projetos, isPending: loadingProjetos } = useQuery({
           </template>
         </InputSelect>
       </div>
+
       <div v-if="loadingIndicadores">Carregando...</div>
       <template v-else>
         <template v-for="indicador in indicadores.data">

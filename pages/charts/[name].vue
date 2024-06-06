@@ -1,7 +1,17 @@
 <script setup>
+import { useQuery } from "@tanstack/vue-query";
+import TableHeader from "~/components/table/TableHeader.vue";
+
 definePageMeta({
   layout: "charts",
   pageTransition: false,
+});
+
+const openDialog = ref(false);
+
+const { data: regioes, isPending: loadingRegioes } = useQuery({
+  queryKey: ["regioes"],
+  queryFn: () => fetcher("/tipo_regioes"),
 });
 
 onMounted(() => {
@@ -19,7 +29,15 @@ onMounted(() => {
       </h1>
 
       <TooltipWrapper>
-        <InputIconBtn color="primary">
+        <InputIconBtn
+          color="primary"
+          @click="
+            (e) => {
+              e.currentTarget.blur();
+              openDialog = true;
+            }
+          "
+        >
           <Icon
             name="fluent:document-data-16-filled"
             size="24"
@@ -35,7 +53,15 @@ onMounted(() => {
       </TooltipWrapper>
 
       <TooltipWrapper>
-        <InputIconBtn color="primary">
+        <InputIconBtn
+          color="primary"
+          @click="
+            (e) => {
+              e.currentTarget.blur();
+              openDialog = true;
+            }
+          "
+        >
           <Icon
             name="icomoon-free:database"
             size="24"
@@ -45,12 +71,14 @@ onMounted(() => {
 
         <TooltipText
           ><p class="whitespace-nowrap text-sm font-medium">
-            Indicadores
+            Ficha do Indicador
           </p></TooltipText
         >
       </TooltipWrapper>
-
-      <FilterElement />
+      <div class="flex ml-auto justify-end" v-if="loadingRegioes">
+        <CircularSpinner />
+      </div>
+      <FilterElement v-else :regioes="regioes.data" />
     </div>
     <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4">
       <ChartCardWrapper
@@ -84,6 +112,56 @@ onMounted(() => {
       /></ChartCardWrapper>
     </div>
   </main>
+  <Dialog :open="openDialog" class="w-[600px]">
+    <template #title
+      ><h2 class="text-3xl font-bold text-primary-800">
+        Tabela de Dados
+      </h2></template
+    >
+    <template #content>
+      <Table class="">
+        <template #head>
+          <TableRow>
+            <TableHeader>Periodo</TableHeader>
+            <TableHeader>Regiao</TableHeader>
+            <TableHeader>Valor</TableHeader>
+          </TableRow>
+        </template>
+        <template #body>
+          <TableRow>
+            <TableCell>2020</TableCell>
+            <TableCell>Helipa</TableCell>
+            <TableCell>2</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>2020</TableCell>
+            <TableCell>Helipa</TableCell>
+            <TableCell>2</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>2020</TableCell>
+            <TableCell>Helipa</TableCell>
+            <TableCell>2</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>2020</TableCell>
+            <TableCell>Helipa</TableCell>
+            <TableCell>2</TableCell>
+          </TableRow>
+        </template>
+      </Table>
+    </template>
+    <template #action>
+      <div class="flex justify-end">
+        <button
+          @click="openDialog = false"
+          class="bg-red-500 py-2 px-4 text-white font-bold rounded hover:bg-red-800 focus:bg-red-800"
+        >
+          Fechar
+        </button>
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <style>

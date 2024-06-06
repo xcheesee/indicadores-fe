@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     "/**": { ssr: false },
   },
   modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
+  components: [
+    { path: '~/components/table', pathPrefix: false },
+    { path: '~/components' }
+  ],
   tailwindcss: {
     configPath: "tailwind.config",
     exposeConfig: { level: 2, },

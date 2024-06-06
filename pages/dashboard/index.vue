@@ -46,8 +46,7 @@ const filteredIndicadores = computed(() => {
           id="projeto"
           class="h-8 w-full rounded bg-white px-2"
           v-model="selectedProjeto"
-          tabindex="100"
-          placeholder="Selecione um Projeto"
+          tabindex="98"
         >
           <template #label>
             <p class="text-xl font-bold text-primary-800">Projeto</p>

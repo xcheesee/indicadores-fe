@@ -1,9 +1,16 @@
 <script setup>
+const props = defineProps({
+  regioes: String,
+});
+
+const regiaoModel = ref("");
+const periodoModel = ref("");
+
 const filterIcon = ref(null);
 const searchIcon = ref(null);
 function animateEnterFilter(e) {
-  const filter = e.currentTarget.children[1];
-  const search = e.currentTarget.children[2];
+  const filter = filterIcon.value;
+  const search = searchIcon.value;
   if (e.currentTarget.classList.contains("activ")) return;
   filter.style.opacity = 0;
   search.style.opacity = 1;
@@ -24,7 +31,8 @@ function animateLeaveFilter(e) {
 }
 
 onMounted(async () => {
-  //2 nextTicks para avancar o eventloop de forma que seja possivel acessar elementos do DOM
+  //3 nextTicks para avancar o eventloop de forma que seja possivel acessar elementos do DOM
+  await nextTick();
   await nextTick();
   await nextTick();
 
@@ -69,16 +77,26 @@ onBeforeUnmount(() => {
           id="input-wrapper"
         >
           <FilterSelect
-            placeholder="Regiao"
+            label="Regiao"
             name="regiao"
             class="bg-secondary-50 w-48 rounded-lg"
-          />
+            v-model="regiaoModel"
+          >
+            <option value="">Todas</option>
+            <template v-for="regiao in regioes">
+              <option :value="regiao.id">{{ regiao.nome }}</option>
+            </template>
+          </FilterSelect>
 
           <FilterSelect
-            placeholder="Periodo"
             name="periodo"
             class="bg-secondary-50 w-48 rounded-lg"
-          />
+            label="Periodo"
+            v-model="periodoModel"
+          >
+            <InputSelectValue value="">Todos</InputSelectValue>
+            <InputSelectValue value="1">Periodo 1</InputSelectValue>
+          </FilterSelect>
         </div>
 
         <div
