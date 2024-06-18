@@ -103,8 +103,8 @@ onBeforeUnmount(() => {
         e.preventDefault();
         e.currentTarget.blur();
         return navigateTo({
-          path: `/charts/${title}`,
-          query: { fromDash: 'false' },
+          path: `/charts/${id}`,
+          query: { fromDash: 'false', name: title },
         });
       }
     "

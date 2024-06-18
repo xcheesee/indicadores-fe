@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <dialog ref="modal" class="bg-white rounded fade">
+  <dialog ref="modal" class="bg-white rounded fade max-w-[50%] max-h-[80%]">
     <div
       class="grid grid-rows-[min-content_1fr_min-content] px-4 py-2 rounded gap-6"
     >

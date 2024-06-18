@@ -42,7 +42,7 @@ const { data: projetos, isPending: loadingProjetos } = useQuery({
       <div v-if="loadingIndicadores">Carregando...</div>
       <template v-else>
         <template v-for="indicador in indicadores.data">
-          <SidebarBtn :title="indicador.nome">
+          <SidebarBtn :title="indicador.nome" :id="indicador.id">
             <template #icone>
               <div class="relative w-8 h-8">
                 <img

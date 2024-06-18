@@ -76,7 +76,11 @@ const filteredIndicadores = computed(() => {
       class="flex col-span-12 flex-wrap gap-4 *:basis-[25%] *:grow *: shrink-0"
     >
       <template v-for="indicador in filteredIndicadores">
-        <PainelBtn :texto="indicador.nome" class="col-span-3">
+        <PainelBtn
+          :texto="indicador.nome"
+          :id="indicador.id"
+          class="col-span-3"
+        >
           <template #icone>
             <div class="w-20 h-20 relative">
               <img

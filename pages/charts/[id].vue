@@ -7,12 +7,22 @@ definePageMeta({
   pageTransition: false,
 });
 
+const route = useRoute();
 const openDialog = ref(false);
+const openFichaDialog = ref(false);
+const openTabelaDialog = ref(false);
 
 const { data: regioes, isPending: loadingRegioes } = useQuery({
   queryKey: ["regioes"],
   queryFn: () => fetcher("/tipo_regioes"),
 });
+
+const { data: indicador, isPending: loadingIndicador } = useQuery({
+  queryKey: ["indicador", route.params.id],
+  queryFn: () => fetcher("/indicador/" + route.params.id),
+});
+
+watch(indicador, () => console.log(indicador.value.data));
 
 onMounted(() => {
   window.scrollTo(0, 0);
@@ -25,7 +35,7 @@ onMounted(() => {
   >
     <div class="flex w-full items-end gap-4 px-4 py-3">
       <h1 class="text-5xl font-bold text-primary-900">
-        {{ $route.params.name }}
+        {{ $route.query.name }}
       </h1>
 
       <TooltipWrapper>
@@ -34,7 +44,7 @@ onMounted(() => {
           @click="
             (e) => {
               e.currentTarget.blur();
-              openDialog = true;
+              openTabelaDialog = true;
             }
           "
         >
@@ -57,8 +67,9 @@ onMounted(() => {
           color="primary"
           @click="
             (e) => {
+              if (loadingIndicador) return;
               e.currentTarget.blur();
-              openDialog = true;
+              openFichaDialog = true;
             }
           "
         >
@@ -80,7 +91,13 @@ onMounted(() => {
       </div>
       <FilterElement v-else :regioes="regioes.data" />
     </div>
-    <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4">
+    <div
+      v-if="loadingIndicador"
+      class="grid h-[90vh] w-full justify-center items-center"
+    >
+      <CircularSpinner />
+    </div>
+    <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4" v-else>
       <ChartCardWrapper
         class="col-span-12 2xl:col-span-6"
         :fadein="$route.query.fromDash === 'true'"
@@ -112,7 +129,7 @@ onMounted(() => {
       /></ChartCardWrapper>
     </div>
   </main>
-  <Dialog :open="openDialog" class="w-[600px]">
+  <Dialog :open="openTabelaDialog" class="w-[600px]">
     <template #title
       ><h2 class="text-3xl font-bold text-primary-800">
         Tabela de Dados
@@ -154,7 +171,92 @@ onMounted(() => {
     <template #action>
       <div class="flex justify-end">
         <button
-          @click="openDialog = false"
+          @click="openTabelaDialog = false"
+          class="bg-red-500 py-2 px-4 text-white font-bold rounded hover:bg-red-800 focus:bg-red-800"
+        >
+          Fechar
+        </button>
+      </div>
+    </template>
+  </Dialog>
+  <Dialog :open="openFichaDialog" class="w-[600px]">
+    <template #title
+      ><h2 class="text-3xl font-bold text-primary-800">
+        Ficha do Indicador -
+        <span class="text-xl text-primary-600 m-auto">{{
+          indicador?.data?.nome
+        }}</span>
+      </h2></template
+    >
+    <template #content>
+      <div
+        class="grid grid-cols-[max-content_1fr] rounded divide-primary-300 overflow-auto mx-4 my-2"
+      >
+        <div
+          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold px-2"
+        >
+          Projeto:
+        </div>
+        <div class="py-2 px-4">
+          {{ indicador?.data?.projeto }}
+        </div>
+
+        <div
+          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold px-2"
+        >
+          Departamento:
+        </div>
+        <div class="py-2 px-4">
+          {{ indicador?.data?.departamento.nome }}({{
+            indicador?.data?.departamento.sigla
+          }})
+        </div>
+
+        <div
+          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold px-2"
+        >
+          Periodicidade:
+        </div>
+        <div class="py-2 px-4">
+          {{ indicador?.data?.periodicidade }}
+        </div>
+
+        <div
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+        >
+          Nota Tecnica:
+        </div>
+        <div class="py-2 px-4">{{ indicador?.data?.nota_tecnica }}</div>
+
+        <div
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+        >
+          Observacao:
+        </div>
+        <div class="py-2 px-4">{{ indicador?.data?.observacao }}</div>
+
+        <div
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+        >
+          Observacao:
+        </div>
+        <div class="py-2 px-4">{{ indicador?.data?.observacao }}</div>
+
+        <div
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+        >
+          Fonte de Dados:
+        </div>
+        <div class="py-2 px-4">
+          {{ indicador?.data?.fonte?.nome }} -
+          {{ indicador?.data?.fonte?.descricao.split("-")[1] }}
+        </div>
+      </div>
+    </template>
+    <template #action>
+      <div class="flex justify-end">
+        <button
+          @click="openFichaDialog = false"
           class="bg-red-500 py-2 px-4 text-white font-bold rounded hover:bg-red-800 focus:bg-red-800"
         >
           Fechar

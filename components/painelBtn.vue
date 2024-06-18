@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
   texto: String,
+  id: Number,
 });
 
 const container = ref(null);
@@ -127,8 +128,8 @@ function createFixedCloneEle(ele, eleType) {
         async (e) => {
           await triggerPageTransition(e);
           return navigateTo({
-            path: `/charts/${texto}`,
-            query: { fromDash: 'true' },
+            path: `/charts/${id}`,
+            query: { fromDash: 'true', name: texto },
           });
         }
       "
