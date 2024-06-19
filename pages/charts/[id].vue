@@ -8,7 +8,7 @@ definePageMeta({
 });
 
 const route = useRoute();
-const openDialog = ref(false);
+//const openDialog = ref(false);
 const openFichaDialog = ref(false);
 const openTabelaDialog = ref(false);
 
@@ -22,7 +22,22 @@ const { data: indicador, isPending: loadingIndicador } = useQuery({
   queryFn: () => fetcher("/indicador/" + route.params.id),
 });
 
-watch(indicador, () => console.log(indicador.value.data));
+const { data: variavel, isPending: loadingVariaveis } = useQuery({
+  queryKey: ["variavel", route.params.id],
+  queryFn: () => fetcher(`/indicador/${route.params.id}/variavel`),
+});
+
+const variavelId = computed(() => variavel?.value?.data[0]?.variavel?.id);
+
+const variavelEnabled = computed(
+  () => !!variavel?.value?.data[0]?.variavel?.id,
+);
+
+const { data: valores, isPending: loadingValores } = useQuery({
+  queryKey: ["valores", variavelId],
+  queryFn: () => fetcher(`/variavel/${variavelId.value}/valores`),
+  enabled: variavelEnabled,
+});
 
 onMounted(() => {
   window.scrollTo(0, 0);
@@ -44,6 +59,9 @@ onMounted(() => {
           @click="
             (e) => {
               e.currentTarget.blur();
+              if (!variavel || loadingValores) {
+                return;
+              }
               openTabelaDialog = true;
             }
           "
@@ -136,16 +154,29 @@ onMounted(() => {
       </h2></template
     >
     <template #content>
-      <Table class="">
-        <template #head>
-          <TableRow>
-            <TableHeader>Periodo</TableHeader>
-            <TableHeader>Regiao</TableHeader>
-            <TableHeader>Valor</TableHeader>
-          </TableRow>
-        </template>
-        <template #body>
-          <TableRow>
+      <div v-if="loadingValores || loadingVariaveis">Carregando</div>
+      <template v-else>
+        <div>
+          <!--<span class="text-neutral-400">Variavel:</span>-->
+          <span class="font-bold text-primary-600 text-xl">{{
+            variavel?.data[0]?.variavel?.nome
+          }}</span>
+        </div>
+        <Table class="">
+          <template #head>
+            <TableRow>
+              <TableHeader>Periodo</TableHeader>
+              <TableHeader>Regiao</TableHeader>
+              <TableHeader>Valor</TableHeader>
+            </TableRow>
+          </template>
+          <template #body>
+            <TableRow v-for="valor in valores.data">
+              <TableCell>{{ valor.periodo }}</TableCell>
+              <TableCell>{{ valor.regiao.nome }}</TableCell>
+              <TableCell>{{ valor.valor }}</TableCell>
+            </TableRow>
+            <!--<TableRow>
             <TableCell>2020</TableCell>
             <TableCell>Helipa</TableCell>
             <TableCell>2</TableCell>
@@ -164,9 +195,10 @@ onMounted(() => {
             <TableCell>2020</TableCell>
             <TableCell>Helipa</TableCell>
             <TableCell>2</TableCell>
-          </TableRow>
-        </template>
-      </Table>
+          </TableRow>-->
+          </template>
+        </Table>
+      </template>
     </template>
     <template #action>
       <div class="flex justify-end">
@@ -227,13 +259,6 @@ onMounted(() => {
           Nota Tecnica:
         </div>
         <div class="py-2 px-4">{{ indicador?.data?.nota_tecnica }}</div>
-
-        <div
-          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
-        >
-          Observacao:
-        </div>
-        <div class="py-2 px-4">{{ indicador?.data?.observacao }}</div>
 
         <div
           class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"

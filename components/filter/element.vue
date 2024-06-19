@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  regioes: String,
+  regioes: Array,
 });
 
 const regiaoModel = ref("");
@@ -32,6 +32,7 @@ function animateLeaveFilter(e) {
 
 onMounted(async () => {
   //3 nextTicks para avancar o eventloop de forma que seja possivel acessar elementos do DOM
+  //work around utilizado de acordo com issue https://github.com/nuxt/nuxt/issues/10763
   await nextTick();
   await nextTick();
   await nextTick();
