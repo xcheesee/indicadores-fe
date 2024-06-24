@@ -1,5 +1,5 @@
 <script setup>
-import { useQuery } from "@tanstack/vue-query";
+import { useQueries, useQuery } from "@tanstack/vue-query";
 import TableHeader from "~/components/table/TableHeader.vue";
 
 definePageMeta({
@@ -8,7 +8,6 @@ definePageMeta({
 });
 
 const route = useRoute();
-//const openDialog = ref(false);
 const openFichaDialog = ref(false);
 const openTabelaDialog = ref(false);
 
@@ -27,16 +26,32 @@ const { data: variavel, isPending: loadingVariaveis } = useQuery({
   queryFn: () => fetcher(`/indicador/${route.params.id}/variavel`),
 });
 
-const variavelId = computed(() => variavel?.value?.data[0]?.variavel?.id);
-
-const variavelEnabled = computed(
-  () => !!variavel?.value?.data[0]?.variavel?.id,
+const variaveisId = computed(() =>
+  variavel?.value?.data.map((entry) => entry.variavel.id),
 );
 
-const { data: valores, isPending: loadingValores } = useQuery({
-  queryKey: ["valores", variavelId],
-  queryFn: () => fetcher(`/variavel/${variavelId.value}/valores`),
-  enabled: variavelEnabled,
+const valorQueries = computed(() => {
+  if (!variaveisId.value) return [];
+  return variaveisId.value.map((id) => {
+    return {
+      queryKey: ["valor", id],
+      queryFn: async () => {
+        const res = await fetcher(`/variavel/${id}/valores`);
+        return { ...res, variavelId: id };
+      },
+    };
+  });
+});
+
+const valores = useQueries({
+  queries: valorQueries,
+  combine: (results) => {
+    return {
+      data: results.map((result) => result.data),
+      isPending: results.some((result) => result.isPending),
+      initialData: [],
+    };
+  },
 });
 
 onMounted(() => {
@@ -59,7 +74,7 @@ onMounted(() => {
           @click="
             (e) => {
               e.currentTarget.blur();
-              if (!variavel || loadingValores) {
+              if (!variavel || valores.isPending) {
                 return;
               }
               openTabelaDialog = true;
@@ -69,13 +84,22 @@ onMounted(() => {
           <Icon
             name="fluent:document-data-16-filled"
             size="24"
-            class="cursor-pointer text-primary-600"
+            class="cursor-pointer"
+            :class="[
+              loadingVariaveis || valores.isPending
+                ? 'text-primary-300'
+                : 'text-primary-600',
+            ]"
           />
         </InputIconBtn>
 
         <TooltipText>
           <p class="whitespace-nowrap text-sm font-medium">
-            Tabela de Dados
+            {{
+              loadingVariaveis || valores.isPending
+                ? "Carregando..."
+                : "Tabela de Dados"
+            }}
           </p></TooltipText
         >
       </TooltipWrapper>
@@ -94,13 +118,16 @@ onMounted(() => {
           <Icon
             name="icomoon-free:database"
             size="24"
-            class="cursor-pointer text-primary-600"
+            class="cursor-pointer"
+            :class="[
+              loadingIndicador ? 'text-primary-300' : 'text-primary-600',
+            ]"
           />
         </InputIconBtn>
 
         <TooltipText
           ><p class="whitespace-nowrap text-sm font-medium">
-            Ficha do Indicador
+            {{ loadingVariaveis ? "Carregando..." : "Ficha do Indicador" }}
           </p></TooltipText
         >
       </TooltipWrapper>
@@ -109,12 +136,14 @@ onMounted(() => {
       </div>
       <FilterElement v-else :regioes="regioes.data" />
     </div>
+
     <div
       v-if="loadingIndicador"
       class="grid h-[90vh] w-full justify-center items-center"
     >
       <CircularSpinner />
     </div>
+
     <div class="grid h-full w-full grid-cols-12 gap-8 px-4 py-4" v-else>
       <ChartCardWrapper
         class="col-span-12 2xl:col-span-6"
@@ -147,6 +176,7 @@ onMounted(() => {
       /></ChartCardWrapper>
     </div>
   </main>
+
   <Dialog :open="openTabelaDialog" class="w-[600px]">
     <template #title
       ><h2 class="text-3xl font-bold text-primary-800">
@@ -154,50 +184,32 @@ onMounted(() => {
       </h2></template
     >
     <template #content>
-      <div v-if="loadingValores || loadingVariaveis">Carregando</div>
+      <div v-if="valores.isPending || loadingVariaveis">Carregando</div>
       <template v-else>
-        <div>
-          <!--<span class="text-neutral-400">Variavel:</span>-->
-          <span class="font-bold text-primary-600 text-xl">{{
-            variavel?.data[0]?.variavel?.nome
-          }}</span>
-        </div>
-        <Table class="">
-          <template #head>
-            <TableRow>
-              <TableHeader>Periodo</TableHeader>
-              <TableHeader>Regiao</TableHeader>
-              <TableHeader>Valor</TableHeader>
-            </TableRow>
-          </template>
-          <template #body>
-            <TableRow v-for="valor in valores.data">
-              <TableCell>{{ valor.periodo }}</TableCell>
-              <TableCell>{{ valor.regiao.nome }}</TableCell>
-              <TableCell>{{ valor.valor }}</TableCell>
-            </TableRow>
-            <!--<TableRow>
-            <TableCell>2020</TableCell>
-            <TableCell>Helipa</TableCell>
-            <TableCell>2</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>2020</TableCell>
-            <TableCell>Helipa</TableCell>
-            <TableCell>2</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>2020</TableCell>
-            <TableCell>Helipa</TableCell>
-            <TableCell>2</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>2020</TableCell>
-            <TableCell>Helipa</TableCell>
-            <TableCell>2</TableCell>
-          </TableRow>-->
-          </template>
-        </Table>
+        <template v-for="entry in valores?.data">
+          <div>
+            <span class="font-bold text-primary-600 text-xl">{{
+              variavel?.data.find((v) => v.variavel.id == entry.variavelId)
+                ?.variavel?.nome
+            }}</span>
+          </div>
+          <Table>
+            <template #head>
+              <TableRow>
+                <TableHeader>Periodo</TableHeader>
+                <TableHeader>Regiao</TableHeader>
+                <TableHeader>Valor</TableHeader>
+              </TableRow>
+            </template>
+            <template #body>
+              <TableRow v-for="valor in entry?.data">
+                <TableCell>{{ valor.periodo }}</TableCell>
+                <TableCell>{{ valor.regiao.nome }}</TableCell>
+                <TableCell>{{ valor.valor }}</TableCell>
+              </TableRow>
+            </template>
+          </Table>
+        </template>
       </template>
     </template>
     <template #action>
@@ -211,6 +223,7 @@ onMounted(() => {
       </div>
     </template>
   </Dialog>
+
   <Dialog :open="openFichaDialog" class="w-[600px]">
     <template #title
       ><h2 class="text-3xl font-bold text-primary-800">
@@ -220,6 +233,7 @@ onMounted(() => {
         }}</span>
       </h2></template
     >
+
     <template #content>
       <div
         class="grid grid-cols-[max-content_1fr] rounded divide-primary-300 overflow-auto mx-4 my-2"
