@@ -193,6 +193,7 @@ onMounted(() => {
                 ?.variavel?.nome
             }}</span>
           </div>
+
           <Table>
             <template #head>
               <TableRow>
@@ -201,6 +202,7 @@ onMounted(() => {
                 <TableHeader>Valor</TableHeader>
               </TableRow>
             </template>
+
             <template #body>
               <TableRow v-for="valor in entry?.data">
                 <TableCell>{{ valor.periodo }}</TableCell>
@@ -212,6 +214,7 @@ onMounted(() => {
         </template>
       </template>
     </template>
+
     <template #action>
       <div class="flex justify-end">
         <button
@@ -239,7 +242,7 @@ onMounted(() => {
         class="grid grid-cols-[max-content_1fr] rounded divide-primary-300 overflow-auto mx-4 my-2"
       >
         <div
-          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold px-2"
+          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold"
         >
           Projeto:
         </div>
@@ -248,7 +251,7 @@ onMounted(() => {
         </div>
 
         <div
-          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold px-2"
+          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold"
         >
           Departamento:
         </div>
@@ -259,7 +262,7 @@ onMounted(() => {
         </div>
 
         <div
-          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold px-2"
+          class="bg-primary-100 px-4 flex justify-end py-2 text-primary-900 font-bold"
         >
           Periodicidade:
         </div>
@@ -268,21 +271,21 @@ onMounted(() => {
         </div>
 
         <div
-          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold"
         >
           Nota Tecnica:
         </div>
         <div class="py-2 px-4">{{ indicador?.data?.nota_tecnica }}</div>
 
         <div
-          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold"
         >
           Observacao:
         </div>
         <div class="py-2 px-4">{{ indicador?.data?.observacao }}</div>
 
         <div
-          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold px-2"
+          class="bg-primary-100 px-4 py-2 flex justify-end text-primary-900 font-bold"
         >
           Fonte de Dados:
         </div>
@@ -292,6 +295,7 @@ onMounted(() => {
         </div>
       </div>
     </template>
+
     <template #action>
       <div class="flex justify-end">
         <button
